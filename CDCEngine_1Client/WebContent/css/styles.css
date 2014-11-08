@@ -1,0 +1,20 @@
+body {
+  padding-top: 50px;
+}
+.static_search_input{
+	margin-top: 30px;
+}
+
+.static_search_input .panel{
+	background: rgba(255, 255, 255, 0.8);
+	box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+}
+.entry:not(:first-of-type)
+{
+   margin-top: 0px;
+}
+
+.glyphicon
+{
+   font-size: 12px;
+}
