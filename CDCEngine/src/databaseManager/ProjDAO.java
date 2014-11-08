@@ -23,12 +23,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.zip.CRC32;
 
+import Commons.Encrypt;
+
 
 public class ProjDAO {
 		
 		//Get Token		
-		public String getCDToken(String custid,String accid,String bankCode,double amount){
-			return null;
+		public String getCDToken(String custid,String accid,String bankCode,double amount) throws Exception{
+			 String algorithm = "RC2";   //successfully tested with AES, Blowfish, DES, DESede, RC2
+		        Encrypt cryptHandler = new Encrypt(algorithm);
+		        String input =custid+" "+accid+" "+bankCode+" "+amount;
+		        byte[] encryptedBytes = cryptHandler.encrypt(input);
+		        System.out.println("Encrypted result of 'Hello World' : " + encryptedBytes);
+		        String s=new String(encryptedBytes);
+		        System.out.println(encryptedBytes.toString());
+			return encryptedBytes.toString();
 		}
 		
 		//Insert scheme details in to database
