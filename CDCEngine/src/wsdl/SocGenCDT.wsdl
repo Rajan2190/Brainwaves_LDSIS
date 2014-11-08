@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/SocGenCDT/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SocGenCDT" targetNamespace="http://www.example.org/SocGenCDT/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/SocGenCDT/">
+      <xsd:element name="GetCDT">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="CustomerID" type="xsd:string" />
+          	<xsd:element name="AccountID" type="xsd:string"></xsd:element>
+          	<xsd:element name="BankCode" type="xsd:string"></xsd:element>
+          	<xsd:element name="Amount" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetCDTResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="TokenID" type="xsd:string" />
+          	<xsd:element name="ErrorCode" type="xsd:string"></xsd:element>
+          	<xsd:element name="ErrorMessage" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperation">
+      	<xsd:complexType>
+      		<xsd:sequence>
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperationResponse">
+      	<xsd:complexType>
+      		<xsd:sequence>
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="CDTRequest">
+      	<xsd:sequence>
+      		<xsd:element name="CustomerID" type="xsd:string"></xsd:element>
+      		<xsd:element name="AccountID" type="xsd:string"></xsd:element>
+      		<xsd:element name="BankCode" type="xsd:string"></xsd:element>
+      		<xsd:element name="Amount" type="xsd:string"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CDTResponse">
+      	<xsd:sequence>
+      		<xsd:element name="TokenID" type="xsd:string"></xsd:element>
+      		<xsd:element name="ErrorCode" type="xsd:string"></xsd:element>
+      		<xsd:element name="ErrorMessage" type="xsd:string"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCDTRequest">
+    <wsdl:part name="CDTRequest" type="tns:CDTRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetCDTResponse">
+    <wsdl:part name="CDTResponse" type="tns:CDTResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NewOperationRequest">
+  	<wsdl:part name="parameters" element="tns:NewOperation"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NewOperationResponse">
+  	<wsdl:part name="parameters" element="tns:NewOperationResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SocGenCDT">
+    <wsdl:operation name="GetCDT">
+      <wsdl:input message="tns:GetCDTRequest"/>
+      <wsdl:output message="tns:GetCDTResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SocGenCDTSOAP" type="tns:SocGenCDT">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetCDT">
+      <soap:operation soapAction="http://www.example.org/SocGenCDT/GetCDT"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SocGenCDT">
+    <wsdl:port binding="tns:SocGenCDTSOAP" name="SocGenCDTSOAP">
+      <soap:address location="http://localhost:7800/SocGenCDTService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
