@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <% %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,20 +17,24 @@
 </head>
 <body>
 
-<%String token=(String)request.getAttribute("tokenID"); %>
+<%String token=(String)request.getAttribute("tokenID"); 
+	String custid=(String)session.getAttribute("CustomerID");
+	String accno=(String)session.getAttribute("AccountNo");
+	String balance=(String)session.getAttribute("balance");
+%>
 
 	<FORM METHOD="post" ACTION="DigitalToken">
 		<TABLE BORDER="0" align="center">
 			<tr>
-				<td><label>Account Number: </label> <%=request.getParameter("AccountNo") %></td>
+				<td><label>Account Number: </label> <%=(accno!=null)?accno:"12345" %></td>
 				
 			</tr>
 			<tr>
-				<td><label>Balance: </label><%=request.getParameter("Balance") %></td>
+				<td><label>Balance: </label><%=(balance!=null)?balance:"10000" %></td>
 				
 			</tr>
 			<TR>
-				<input type="hidden" name="AccNo" value="<%=request.getParameter("AccountNo") %>"/>
+				<input type="hidden" name="AccNo" value="<%=(accno!=null)?accno:"12345" %>"/>
 				<td><input type="text" class="form-control" id="Amount"	name="Amount" placeholder="Amount"></td>
 				<TD><INPUT TYPE="submit" VALUE="Get Digital Cash"></TD>
 			</tr>
@@ -39,7 +44,7 @@
 	<FORM METHOD="post" ACTION="http://www.cnn.com">
 		<TABLE BORDER="0" align="center">
 			<tr>
-				<TD><input id="txtSearch" name="txtSearch" type="text" value="<%=token %>" />
+				<TD><input id="txtSearch" name="txtSearch" type="text" value="<%=(token!=null)?token:"" %>" />
 				</TD>
 
 				<TD><INPUT TYPE="submit" VALUE="Use Digital Cash"></TD>

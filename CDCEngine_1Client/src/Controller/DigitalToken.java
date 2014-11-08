@@ -2,6 +2,8 @@ package Controller;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.sql.Connection;
+import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,10 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.example.www.SocGenCDT.CDTRequest;
 import org.example.www.SocGenCDT.CDTResponse;
 import org.example.www.SocGenCDT.SocGenCDTProxy;
+
+import database.DBConnection;
 
 /**
  * Servlet implementation class DigitalToken
@@ -45,7 +50,10 @@ public class DigitalToken extends HttpServlet {
 		RequestDispatcher rd=null;
 		System.out.println("HELLO");
 		System.out.println("HEllo");
-		String bankCode="12";
+		HttpSession session=request.getSession(true);
+		String bankCode=(String)session.getAttribute("Bank");
+		String balance=(String)session.getAttribute("balance");
+		int bal=Integer.parseInt(balance);
 		CDTRequest cdtReq=new CDTRequest();
 		cdtReq.setCustomerID(accountID);
 		cdtReq.setAccountID(accountID);
@@ -62,9 +70,24 @@ public class DigitalToken extends HttpServlet {
 			{	token=cr.getTokenID();
 				System.out.println(token);
 			}
-			par = par + "AccountNo=" + "12345" + "&Balance=" + 10000;
 			//token="[@b12340";
 			request.setAttribute("tokenID", token);
+			if(token!=null){
+				session.removeAttribute("balance");
+				bal=bal-Integer.parseInt(amount);
+				Integer n=new Integer(bal);
+				session.setAttribute("balance",n.toString());
+				try {
+					Connection c = DBConnection.getConnection();
+					Statement st = c.createStatement();
+					String sql = "update hdfcbank set Balance=" + bal + " where accountno='" + accountID + "';";
+					System.out.println("Update sql===>"+sql);
+					st.execute(sql);
+				} catch (Exception e) {
+					System.out.println("Error in manageaccount");
+				}
+				
+			}
 			requestDispatcher = request.getRequestDispatcher("Home.jsp");
 			requestDispatcher.forward(request, response);
 //			requestDispatcher = request.getRequestDispatcher(par);
