@@ -69,7 +69,7 @@ public class CheckDetails extends HttpServlet {
 					requestDispatcher.forward(request, response);
 				}
 				else
-					response.sendRedirect("Login.jsp");
+					response.sendRedirect("ABCLogin.jsp");
 				return;
 			
 		} catch (SQLException e) {

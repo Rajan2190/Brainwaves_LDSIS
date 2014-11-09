@@ -50,6 +50,18 @@
       		<xsd:element name="ErrorMessage" type="xsd:string"></xsd:element>
       	</xsd:sequence>
       </xsd:complexType>
+      <xsd:complexType name="VerifyTokenRequest">
+      	<xsd:sequence>
+      		<xsd:element name="Token" type="xsd:string"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="VerifyTokenResponse" type="xsd:string"></xsd:element>
+      <xsd:complexType name="VerifyTokenResponse">
+      	<xsd:sequence>
+      		<xsd:element name="Amount" type="xsd:string"></xsd:element>
+      		<xsd:element name="ErrorMessage" type="xsd:string"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="GetCDTRequest">
@@ -64,10 +76,26 @@
   <wsdl:message name="NewOperationResponse">
   	<wsdl:part name="parameters" element="tns:NewOperationResponse"></wsdl:part>
   </wsdl:message>
+  <wsdl:message name="VerifyTokenRequest1">
+  	<wsdl:part name="VerifyTokenRequest1" type="tns:VerifyTokenRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="VerifyTokenResponse1">
+  	<wsdl:part name="VerifyTokenResponse1" type="tns:VerifyTokenResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NewOperationRequest1">
+  	<wsdl:part name="NewOperationRequest1" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NewOperationResponse1">
+  	<wsdl:part name="NewOperationResponse1" type="xsd:string"></wsdl:part>
+  </wsdl:message>
   <wsdl:portType name="SocGenCDT">
     <wsdl:operation name="GetCDT">
       <wsdl:input message="tns:GetCDTRequest"/>
       <wsdl:output message="tns:GetCDTResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyToken">
+    	<wsdl:input message="tns:VerifyTokenRequest1"></wsdl:input>
+    	<wsdl:output message="tns:VerifyTokenResponse1"></wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SocGenCDTSOAP" type="tns:SocGenCDT">
